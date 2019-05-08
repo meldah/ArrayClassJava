@@ -1,12 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class ArrayClass {
+
+
+public class ArrayClass 
+{
 	private int dimension;
 	private int[][] elements; 
-	
 	//default constructor
 	//creates a zero 1x1 array
 	public ArrayClass()
@@ -65,10 +68,27 @@ public class ArrayClass {
         		this.elements[i][j] = input.nextInt();
         	}
         }
-        input.close();
+        //input.close();
         System.out.println("These are the numbers you have entered.");
     }
-    
+    //
+    public static boolean isEmpty(ArrayClass arr)
+    {
+    	for(int i = 0; i<arr.dimension; i++)
+    	{
+    		for(int j = 0; j<arr.dimension; j++)
+    		{
+    			if(arr.elements[i][j]!=0)
+    			{
+    				return false;
+    			}
+    		}
+    		
+    	}
+		return true;
+    	
+    	
+    }
 	//find sum of rows
 	public int[] sumOfRows()
 	{
@@ -191,7 +211,7 @@ public class ArrayClass {
 	        Scanner input = new Scanner(new File("input.txt"));
 	        while (input.hasNextLine()) 
 	        {
-	            for (int i = 0; i < rf.dimension; i++) 
+	        	for (int i = 0; i < rf.dimension; i++) 
 	            {
 	                for (int j = 0; j < rf.dimension; j++) 
 	                {
@@ -206,7 +226,7 @@ public class ArrayClass {
 	                }
 	            }
 	        }
-	        input.close();
+	        //input.close();
 	    } 
 	    catch (Exception e) 
 	    {
@@ -265,11 +285,15 @@ public class ArrayClass {
 			}
 	      }
 	    }
+	    else
+	    {
+	    	System.out.println("Arrays cannot be added because of different dimensions.");
+	    }
 	    return newMatrix;
 	  }
 	
 	// Return the matrix newMartix = m1 - m2
-	public static ArrayClass subtract(ArrayClass m1, ArrayClass m2)
+	public ArrayClass subtract(ArrayClass m1, ArrayClass m2)
 	{
 		ArrayClass newMatrix=new ArrayClass(m1.dimension);
 		if ((m1.dimension == m2.dimension)) 
@@ -282,6 +306,10 @@ public class ArrayClass {
 				}
 			}
 		}
+		else
+	    {
+	    	System.out.println("Arrays cannot be subtracted because of different dimensions.");
+	    }
 		   
 		return newMatrix;
 	}
@@ -365,9 +393,10 @@ public class ArrayClass {
 
 	public static void main(String[] args)
 	{
+		int num;
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the dimension of array:");
-        int num = input.nextInt();
+        num = input.nextInt();
         input.nextLine();
         //create an array with user input size
         ArrayClass newArr = new ArrayClass(num);
@@ -396,15 +425,12 @@ public class ArrayClass {
         System.out.println("Array is printed to file - output.txt!");
         //
         System.out.println("Please enter the exact dimension of array which will be read from file: ");
-        /*
         int numRead=0;
-        if(input.hasNextInt())
+        if(input.hasNextLine())
         {
-        	numRead = input.nextInt();
+      	   	numRead = input.nextInt();
         }
-        System.out.println(numRead);
-        */
-        ArrayClass readArr = new ArrayClass(3);
+        ArrayClass readArr = new ArrayClass(numRead);
         try 
         {
 			readFromFile(readArr);
@@ -420,13 +446,18 @@ public class ArrayClass {
         System.out.println("Sum of the two arrays:");
         ArrayClass arrAdd = new ArrayClass(num);//dimension or
         arrAdd = arrAdd.add(newArr, readArr);
-        arrAdd.printArr();
+        if(!isEmpty(arrAdd))
+        {
+        	arrAdd.printArr();
+        }
         //
         System.out.println("Substraction of the two arrays:");
         ArrayClass arrSubstact = new ArrayClass(num);//dimension or
-        arrSubstact = arrSubstact.add(newArr, readArr);
-        arrSubstact.printArr();
-        
+        arrSubstact = arrSubstact.subtract(newArr, readArr);
+        if(!isEmpty(arrSubstact))
+        {
+        	arrSubstact.printArr();
+        }
         //Sum of rows in newArr
         System.out.println("Sum of rows:");
         int[] rowSum = new int[newArr.dimension];
@@ -436,7 +467,6 @@ public class ArrayClass {
         	System.out.print(rowSum[i] + " ");
         }
         System.out.println(rowSum[rowSum.length - 1]);
-        input.close();
         
         //Sum of columns in newArr
         System.out.println("Sum of columns:");
@@ -463,8 +493,8 @@ public class ArrayClass {
         System.out.println("Minimum value of column sums:");
         int minValC = minNumInRow(colSum);
         System.out.println(minValC);
+        
         input.close();
-	}
-	
+}
 }
 
