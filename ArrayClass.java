@@ -59,16 +59,15 @@ public class ArrayClass
     public void fillArray() 
     {
     	System.out.println("Enter the " + dimension + " numbers now.");
-    	Scanner input = new Scanner(System.in);
+    	Scanner inputFill = new Scanner(System.in);
         for (int i = 0 ; i < dimension; i++ ) 
         {
         	System.out.println("Enter " + dimension + " numbers for row " + (i+1) + " now.");
         	for(int j = 0; j < dimension; j++)
         	{
-        		this.elements[i][j] = input.nextInt();
+        		this.elements[i][j] = inputFill.nextInt();
         	}
         }
-        //input.close();
         System.out.println("These are the numbers you have entered.");
     }
     //
@@ -208,8 +207,8 @@ public class ArrayClass
 	{
 	    try 
 	    {
-	        Scanner input = new Scanner(new File("input.txt"));
-	        while (input.hasNextLine()) 
+	        Scanner inputFile = new Scanner(new File("input.txt"));
+	        while (inputFile.hasNextLine()) 
 	        {
 	        	for (int i = 0; i < rf.dimension; i++) 
 	            {
@@ -217,7 +216,7 @@ public class ArrayClass
 	                {
 	                   try
 	                   {
-	                	   rf.elements[i][j] = input.nextInt();
+	                	   rf.elements[i][j] = inputFile.nextInt();
 	                    }
 	                   catch (java.util.NoSuchElementException e) 
 	                   {
@@ -226,7 +225,6 @@ public class ArrayClass
 	                }
 	            }
 	        }
-	        //input.close();
 	    } 
 	    catch (Exception e) 
 	    {
@@ -444,7 +442,7 @@ public class ArrayClass
         readArr.printArr();
         //
         System.out.println("Sum of the two arrays:");
-        ArrayClass arrAdd = new ArrayClass(num);//dimension or
+        ArrayClass arrAdd = new ArrayClass(newArr.dimension);
         arrAdd = arrAdd.add(newArr, readArr);
         if(!isEmpty(arrAdd))
         {
@@ -452,7 +450,7 @@ public class ArrayClass
         }
         //
         System.out.println("Substraction of the two arrays:");
-        ArrayClass arrSubstact = new ArrayClass(num);//dimension or
+        ArrayClass arrSubstact = new ArrayClass(newArr.dimension);
         arrSubstact = arrSubstact.subtract(newArr, readArr);
         if(!isEmpty(arrSubstact))
         {
